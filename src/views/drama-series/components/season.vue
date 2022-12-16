@@ -1,45 +1,36 @@
 <template>
   <div class="k-grid k-widget k-grid-display-block k-editable">
     <div class="k-toolbar k-grid-toolbar">
-      <a role="button" class="k-button k-button-icontext k-grid-add" href="javascript:void(0)" @click="onAddClick">
+      <a
+        role="button"
+        class="k-button k-button-icontext k-grid-add"
+        href="javascript:void(0)"
+        @click="onAddClick"
+      >
         <span class="k-icon k-i-plus"></span>添加新季
       </a>
     </div>
     <el-table
-        :data="tableData"
-        style="width: 100%"
-        border
-        stripe
-        :header-row-class-name="tableHeader"
-        :header-row-style="headerRowStyle"
-        :header-cell-class-name="tableHeader"
-        :header-cell-style="headerRowStyle"
-        :default-sort = "{prop: 'date', order: 'descending'}"
+      :data="tableData"
+      style="width: 100%"
+      border
+      stripe
+      :header-row-class-name="tableHeader"
+      :header-row-style="headerRowStyle"
+      :header-cell-class-name="tableHeader"
+      :header-cell-style="headerRowStyle"
+      :default-sort="{ prop: 'date', order: 'descending' }"
     >
-      <el-table-column
-          prop="nationName"
-          label="季"
-          sortable
-          width="180">
+      <el-table-column prop="nationName" label="季" sortable width="180">
       </el-table-column>
-      <el-table-column
-          prop="name"
-          label="名字"
-          sortable
-          width="180">
+      <el-table-column prop="name" label="名字" sortable width="180">
       </el-table-column>
-      <el-table-column
-          prop="address"
-          label="季剧情">
-      </el-table-column>
-      <el-table-column
-          prop="address"
-          label="最初播出日期">
-      </el-table-column>
+      <el-table-column prop="address" label="季剧情"> </el-table-column>
+      <el-table-column prop="address" label="最初播出日期"> </el-table-column>
       <el-table-column fixed="right" label="" width="120">
         <template #default>
           <el-button link type="primary" size="small">
-            <el-icon style="vertical-align: middle;">
+            <el-icon style="vertical-align: middle">
               <edit />
             </el-icon>
           </el-button>
@@ -47,8 +38,18 @@
       </el-table-column>
     </el-table>
 
-    <el-dialog title="新增" v-model="dialogSeasonHandlerVisible" width="900px" top="10px">
-      <el-form :model="dramaSeason" ref="seasonForm" :rules="seasonRules" label-width="130px">
+    <el-dialog
+      title="新增"
+      v-model="dialogSeasonHandlerVisible"
+      width="900px"
+      top="10px"
+    >
+      <el-form
+        :model="dramaSeason"
+        ref="seasonForm"
+        :rules="seasonRules"
+        label-width="130px"
+      >
         <el-form-item label="季编号" prop="seasonIndex">
           <el-input type="number" v-model="dramaSeason.seasonIndex"></el-input>
         </el-form-item>
@@ -59,25 +60,42 @@
 
         <el-form-item class="left-handler" label="季图片" prop="thumb">
           <el-upload
-              class="avatar-uploader"
-              action="http://localhost:8000/common/upload/image"
-              :show-file-list="false"
-              :on-success="handleEpisodeAvatarSuccess"
-              :before-upload="beforeAvatarUpload"
+            class="avatar-uploader"
+            action="http://172.16.120.203:8000/common/upload/image"
+            :show-file-list="false"
+            :on-success="handleEpisodeAvatarSuccess"
+            :before-upload="beforeAvatarUpload"
           >
-            <img v-if="dramaSeason.thumb" :src="dramaSeason.thumb" class="avatar" />
+            <img
+              v-if="dramaSeason.thumb"
+              :src="dramaSeason.thumb"
+              class="avatar"
+            />
             <el-icon v-else class="avatar-uploader-icon"><Plus /></el-icon>
           </el-upload>
         </el-form-item>
 
         <el-form-item label="季剧情" prop="plot">
-          <el-input v-model="dramaSeason.plot" type="textarea" rows="5"></el-input>
+          <el-input
+            v-model="dramaSeason.plot"
+            type="textarea"
+            rows="5"
+          ></el-input>
         </el-form-item>
 
         <el-form-item>
-          <el-button v-if="$utils.isNotEmpty(dramaSeason.pkId)" type="primary" @click="onSeasonUpdateClick">修改</el-button>
-          <el-button v-else type="primary" @click="onSeasonSaveClick">立即创建</el-button>
-          <el-button @click="dialogSeasonHandlerVisible = false">取消</el-button>
+          <el-button
+            v-if="$utils.isNotEmpty(dramaSeason.pkId)"
+            type="primary"
+            @click="onSeasonUpdateClick"
+            >修改</el-button
+          >
+          <el-button v-else type="primary" @click="onSeasonSaveClick"
+            >立即创建</el-button
+          >
+          <el-button @click="dialogSeasonHandlerVisible = false"
+            >取消</el-button
+          >
         </el-form-item>
       </el-form>
     </el-dialog>
@@ -90,52 +108,52 @@ export default {
   data() {
     return {
       tableData: [],
-      tableHeader: 'table-header',
+      tableHeader: "table-header",
       headerRowStyle: {
-        backgroundColor: '#f8f9fa'
+        backgroundColor: "#f8f9fa",
       },
       dialogSeasonHandlerVisible: false,
       dramaSeason: {
-        seasonIndex: '',
-        seasonName: '',
+        seasonIndex: "",
+        seasonName: "",
       },
-      seasonRules: []
-    }
+      seasonRules: [],
+    };
   },
   methods: {
     handleEpisodeAvatarSuccess(res, file) {
       if (res.code === 200) {
-        this.dramaSeason.thumb = res.data.filePath
+        this.dramaSeason.thumb = res.data.filePath;
         // 目前就只有一个附件
-        this.dramaSeason.fileInfoList = []
-        this.dramaSeason.fileInfoList.push(res.data)
+        this.dramaSeason.fileInfoList = [];
+        this.dramaSeason.fileInfoList.push(res.data);
       } else {
-        this.$message.error('上传图片失败')
+        this.$message.error("上传图片失败");
       }
     },
     beforeAvatarUpload(file) {
-      const isJPG = file.type === 'image/jpeg'
-      const isLt2M = file.size / 1024 / 1024 < 2
+      const isJPG = file.type === "image/jpeg";
+      const isLt2M = file.size / 1024 / 1024 < 2;
 
       if (!isJPG) {
-        this.$message.error('上传头像图片只能是 JPG 格式!')
+        this.$message.error("上传头像图片只能是 JPG 格式!");
       }
       if (!isLt2M) {
-        this.$message.error('上传头像图片大小不能超过 2MB!')
+        this.$message.error("上传头像图片大小不能超过 2MB!");
       }
       return isJPG && isLt2M;
     },
     onAddClick() {
-      this.dialogSeasonHandlerVisible = true
+      this.dialogSeasonHandlerVisible = true;
     },
     onSeasonSaveClick() {
-      alert('save')
+      alert("save");
     },
     onSeasonUpdateClick() {
-      alert('update')
-    }
-  }
-}
+      alert("update");
+    },
+  },
+};
 </script>
 
 <style scoped>
@@ -146,7 +164,9 @@ export default {
   border-style: solid;
   box-sizing: border-box;
   outline: 0;
-  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji",
+    "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
   font-size: 1rem;
   line-height: 1.5;
   list-style: none;
@@ -183,23 +203,40 @@ export default {
   -webkit-margin-start: -0.375rem;
   margin-inline-start: -0.375rem;
 }
-.k-button+.k-button, .k-toolbar .k-button:first-child, .k-link+.k-button {
+.k-button + .k-button,
+.k-toolbar .k-button:first-child,
+.k-link + .k-button {
   margin-left: 0.375rem;
 }
 .k-grid a {
   color: inherit;
   text-decoration: none;
 }
-.k-widget, .k-textbox, .k-textarea, .k-button {
-  font-family: 'Source Sans Pro', Arial, sans-serif;
+.k-widget,
+.k-textbox,
+.k-textarea,
+.k-button {
+  font-family: "Source Sans Pro", Arial, sans-serif;
   font-size: 1em;
 }
-.k-toolbar .k-button, .k-toolbar .k-button-group, .k-toolbar .k-separator, .k-toolbar .k-split-button, .k-toolbar .k-textbox, .k-toolbar .k-widget, .k-toolbar label {
+.k-toolbar .k-button,
+.k-toolbar .k-button-group,
+.k-toolbar .k-separator,
+.k-toolbar .k-split-button,
+.k-toolbar .k-textbox,
+.k-toolbar .k-widget,
+.k-toolbar label {
   display: flex;
   align-items: center;
   align-content: center;
 }
-.k-toolbar .k-button, .k-toolbar .k-button-group, .k-toolbar .k-separator, .k-toolbar .k-split-button, .k-toolbar .k-textbox, .k-toolbar .k-widget, .k-toolbar label {
+.k-toolbar .k-button,
+.k-toolbar .k-button-group,
+.k-toolbar .k-separator,
+.k-toolbar .k-split-button,
+.k-toolbar .k-textbox,
+.k-toolbar .k-widget,
+.k-toolbar label {
   -ms-flex-item-align: center;
   align-self: center;
 }
@@ -209,11 +246,14 @@ export default {
   padding-left: 1.2rem;
   padding-right: 1.2rem;
 }
-.k-widget, .k-textbox, .k-textarea, .k-button {
-  font-family: 'Source Sans Pro', Arial, sans-serif;
+.k-widget,
+.k-textbox,
+.k-textarea,
+.k-button {
+  font-family: "Source Sans Pro", Arial, sans-serif;
   font-size: 1em;
 }
-.k-toolbar>* {
+.k-toolbar > * {
   -ms-flex-negative: 0;
   flex-shrink: 0;
   display: -ms-inline-flexbox;
@@ -230,7 +270,8 @@ export default {
   background-color: #e4e7eb;
 }
 .k-button {
-  transition: color .2s ease-in-out,background-color .2s ease-in-out,border-color .2s ease-in-out,box-shadow .2s ease-in-out;
+  transition: color 0.2s ease-in-out, background-color 0.2s ease-in-out,
+    border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
 }
 .k-button-icontext {
   overflow: visible;
@@ -243,7 +284,9 @@ export default {
   border-style: solid;
   font-size: 1rem;
   line-height: 1.5;
-  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji",
+    "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
   text-align: center;
   text-decoration: none;
   white-space: nowrap;
@@ -264,7 +307,7 @@ export default {
 }
 .k-grid {
   border-radius: 8px;
-  border-color: rgba(33,37,41,0.125);
+  border-color: rgba(33, 37, 41, 0.125);
   color: #212529;
   background-color: #fff;
 }
@@ -285,12 +328,12 @@ export default {
   top: 100%;
   left: 0;
 }
-/deep/  .el-form--label-top .el-form-item__label {
+/deep/ .el-form--label-top .el-form-item__label {
   font-weight: 600;
   color: #212529;
   font-size: 1rem;
   line-height: 1.5;
-  font-family: 'Source Sans Pro', Arial, sans-serif;
+  font-family: "Source Sans Pro", Arial, sans-serif;
 }
 /deep/ .el-select {
   width: 100%;
@@ -313,14 +356,15 @@ export default {
   padding: 0 12px 0 0;
   box-sizing: border-box;
   font-weight: 600;
-  font-family: 'Source Sans Pro', Arial, sans-serif;
+  font-family: "Source Sans Pro", Arial, sans-serif;
   border-radius: 8px;
 }
 
 /deep/ .el-input__inner {
   height: 38px;
 }
-/deep/ .el-date-editor.el-input, .el-date-editor.el-input__wrapper {
+/deep/ .el-date-editor.el-input,
+.el-date-editor.el-input__wrapper {
   height: 38px;
 }
 /*上传的部分*/
@@ -332,7 +376,7 @@ export default {
   overflow: hidden;
 }
 /deep/ .avatar-uploader .el-upload:hover {
-  border-color: #409EFF;
+  border-color: #409eff;
 }
 .avatar-uploader-icon {
   font-size: 28px;
