@@ -25,7 +25,7 @@ const routes = [
       },
       {
         path: '/index/dramaSeriesDetail:pkId',
-        name: 'dramaSeriesList',
+        name: 'dramaSeriesDetail',
         component: () => import('@/views/drama-series/detail')
       },
       {

@@ -64,7 +64,7 @@
                             <div class="wrapper">
                               <div class="title">
                                 <div>
-                                  <a data-id="5db8d664a1d3320014e82a77" data-media-type="tv" data-media-adult="false" class="result" href="javascript:void(0)">
+                                  <a data-id="5db8d664a1d3320014e82a77" data-media-type="tv" data-media-adult="false" class="result" href="javascript:void(0)" @click="onTVClick(item)">
                                     <h2>{{ item.showTitle }}</h2>
                                   </a>
                                 </div>
@@ -218,12 +218,11 @@ export default {
       })
     },
     // 跳转到TV的详情页
-    onTVClick() {
+    onTVClick(item) {
       this.$router.push({
-        name: 'tvDetail',
+        name: 'dramaSeriesDetail',
         params: {
-          type: 'detail',
-          data: JSON.stringify(item)
+          pkId: item.pkId
         }
       })
     }
