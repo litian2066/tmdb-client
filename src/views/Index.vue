@@ -1,25 +1,26 @@
 <template>
-<!--  <el-container>
-    <el-header>
-      <Header @on-search="headSearch"/>
-    </el-header>
-    <el-main id="main" class="smaller subtle show_search_false">
-      <div class="inner_block">
-        <div class="inner_content">
-          <div class="content">
-            <router-view :search-list="searchList" :keyword="keyword"/>
+  <div>
+    <el-container>
+      <el-header>
+        <Header @on-search="headSearch"/>
+      </el-header>
+      <el-main id="main" class="smaller subtle show_search_false">
+        <div class="inner_block">
+          <div class="inner_content">
+            <div class="content">
+              <router-view :search-list="searchList" :keyword="keyword"/>
+            </div>
           </div>
         </div>
-      </div>
-    </el-main>
-  </el-container>-->
-  <router-view/>
+      </el-main>
+    </el-container>
+  </div>
 </template>
 
 <script>
 import Header  from '@/components/Header'
 export default {
-  name: 'App',
+  name: 'Index',
   components: { Header },
   data() {
     return {
@@ -42,24 +43,7 @@ export default {
 </script>
 
 <style>
-body {
-  margin: 0;
-  font-family: 'Source Sans Pro', Arial, sans-serif;
-}
-/*body {
-  display: flex;
-  flex-direction: column;
-  min-height: 100%;
-  height: auto;
-  -ms-overflow-style: -ms-autohiding-scrollbar;
-  background-color: rgba(var(--tmdbDarkBlue), 1);
-  color: #000;
-
-  font-size: 1em;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}*/
-*p {
+p {
   font-size: 1em;
 }
 body * {
@@ -70,7 +54,11 @@ a {
   text-decoration: none;
   font-weight: normal;
 }
-/*main {
+body, ul {
+  margin: 0;
+  padding: 0;
+}
+main {
   width: 100%;
   display: flex;
   flex-wrap: wrap;
@@ -101,5 +89,5 @@ div.inner_block.docs div.inner_content div.content, main div.media>div.single_co
 }
 section.inner_content a, section.media_panel div.menu ul li.active a {
   color: #000;
-}*/
+}
 </style>

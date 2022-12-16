@@ -1,0 +1,14 @@
+/**
+    公共CSS
+ */
+p {
+    font-size: 1em;
+}
+body * {
+    box-sizing: border-box;
+}
+a {
+    color: #000;
+    text-decoration: none;
+    font-weight: normal;
+}
